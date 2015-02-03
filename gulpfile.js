@@ -1,37 +1,44 @@
 var gulp = require( 'gulp' ),
     less = require( 'gulp-less' ),
-    connect = require( 'gulp-connect' );
+    uglify = require( 'gulp-uglify' ),
+    concat = require( 'gulp-concat' );
 
-var masterLess, lessSources, jsSources, outputDir;
+var masterLess, lessSources, jsSources, jsLibSources, htmlSources;
 
-outputDir = 'resources/webapps/static';
-masterLess = outputDir + '/components/less/cmStyles.less';
-lessSources = [ outputDir + '/components/less/*.less',
-    outputDir + '/components/less/mixins/*.less' ];
-jsSources = [ outputDir + ' /components/js/*.js' ];
+masterLess = 'components/less/rs-theme.less';
+lessSources = [ 'components/less/*.less', 'components/less/mixins/*.less' ];
+jsSources = [ 'components/js/*.js' ];
+jsLibSources = [ 'components/js/libs/*.js' ];
+htmlSources = [ 'pages/*.html' ];
 
 
 // Tasks
 gulp.task( 'less', function(){
     return gulp.src( masterLess )
         .pipe( less() )
-        .pipe( gulp.dest( outputDir ) )
-        .pipe( connect.reload() );
+        .pipe( gulp.dest( 'build/css' ) );
 });
 
 gulp.task( 'js', function(){
-    // todo
+    gulp.src( jsSources )
+        .pipe( concat( 'rs-scripts.js' ) )
+        .pipe( gulp.dest( 'build/js' ) );
+});
+gulp.task( 'jsLibs', function(){
+   gulp.src( jsLibSources )
+       .pipe( uglify() )
+       .pipe( gulp.dest( 'build/js/lib' ) );
+});
+
+gulp.task( 'html', function(){
+   return gulp.src( htmlSources );
 });
 
 gulp.task( 'watch', function(){
     gulp.watch( lessSources, [ 'less' ] );
     gulp.watch( jsSources, [ 'js' ] );
+    gulp.watch( jsLibSources, [ 'jsLibs' ] );
+    gulp.watch( htmlSources, [ 'html' ] );
 });
 
-gulp.task( 'connect', function(){
-    connect.server({
-        root: '/',
-        livereload: true
-    })
-});
-gulp.task( 'default', [ 'less', 'js', 'connect', 'watch' ] );
+gulp.task( 'default', [ 'less', 'js', 'jsLibs', 'html', 'watch' ] );

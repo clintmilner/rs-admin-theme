@@ -2,3 +2,5 @@
 app-theme.zip
 bower_components
 bower.json
+node_modules
+build/css
