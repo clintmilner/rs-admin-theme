@@ -1,0 +1,19 @@
+{
+  "name": "rs-admin-theme",
+  "version": "1.0.0",
+  "description": "Rebasoft Admin Theme",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clintmilner/rs-admin-theme.git"
+  },
+  "author": "Clint Milner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clintmilner/rs-admin-theme/issues"
+  },
+  "homepage": "https://github.com/clintmilner/rs-admin-theme"
+}
